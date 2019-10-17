@@ -1,6 +1,7 @@
 package com.lambdaschool.starthere.services;
 
 import com.lambdaschool.starthere.models.Student;
+import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -18,32 +19,32 @@ public class StudentServiceImpl implements StudentService
     private StudentRepository studrepos;
 
     @Override
-    public List<Student> findAllPageable(Pageable pageable)
+    public List<User> findAllPageable(Pageable pageable)
     {
-        List<Student> list = new ArrayList<>();
+        List<User> list = new ArrayList<>();
         studrepos.findAll(pageable).iterator().forEachRemaining(list::add);
         return list;
     }
 
     @Override
-    public List<Student> findAll()
+    public List<User> findAll()
     {
-        List<Student> list = new ArrayList<>();
+        List<User> list = new ArrayList<>();
         studrepos.findAll().iterator().forEachRemaining(list::add);
         return list;
     }
 
     @Override
-    public Student findStudentById(long id) throws EntityNotFoundException
+    public User findStudentById(long id) throws EntityNotFoundException
     {
         return studrepos.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
     }
 
     @Override
-    public List<Student> findStudentByNameLike(String name)
+    public List<User> findStudentByNameLike(String name)
     {
-        List<Student> list = new ArrayList<>();
+        List<User> list = new ArrayList<>();
         studrepos.findByStudnameContainingIgnoreCase(name).iterator().forEachRemaining(list::add);
         return list;
     }
@@ -62,9 +63,9 @@ public class StudentServiceImpl implements StudentService
 
     @Transactional
     @Override
-    public Student save(Student student)
+    public User save(User student)
     {
-        Student newStudent = new Student();
+        User newStudent = new User();
 
         newStudent.setStudname(student.getStudname());
 
@@ -72,9 +73,9 @@ public class StudentServiceImpl implements StudentService
     }
 
     @Override
-    public Student update(Student student, long id)
+    public User update(User student, long id)
     {
-        Student currentStudent = studrepos.findById(id)
+        User currentStudent = studrepos.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
 
         if (student.getStudname() != null)

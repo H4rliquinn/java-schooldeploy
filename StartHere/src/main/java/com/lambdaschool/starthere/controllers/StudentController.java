@@ -1,6 +1,7 @@
 package com.lambdaschool.starthere.controllers;
 
 import com.lambdaschool.starthere.models.Student;
+import com.lambdaschool.starthere.models.User;
 import com.lambdaschool.starthere.services.StudentService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class StudentController
                     size = 3)
                     Pageable pageable)
     {
-        List<Student> myStudents = studentService.findAllPageable(pageable);
+        List<User> myStudents = studentService.findAllPageable(pageable);
         return new ResponseEntity<>(myStudents, HttpStatus.OK);
     }
 
@@ -54,7 +55,7 @@ public class StudentController
     @GetMapping(value = "/students", produces = {"application/json"})
     public ResponseEntity<?> listAllStudents()
     {
-        List<Student> myStudents = studentService.findAll();
+        List<User> myStudents = studentService.findAll();
         return new ResponseEntity<>(myStudents, HttpStatus.OK);
     }
 
@@ -68,7 +69,7 @@ public class StudentController
             @PathVariable
                     Long StudentId)
     {
-        Student r = studentService.findStudentById(StudentId);
+        User r = studentService.findStudentById(StudentId);
         return new ResponseEntity<>(r, HttpStatus.OK);
     }
 
@@ -81,7 +82,7 @@ public class StudentController
             @ApiParam(value = "Name of Student to Return", required = true, example = "Bob Student")
             @PathVariable String name)
     {
-        List<Student> myStudents = studentService.findStudentByNameLike(name);
+        List<User> myStudents = studentService.findStudentByNameLike(name);
         return new ResponseEntity<>(myStudents, HttpStatus.OK);
     }
 
@@ -94,13 +95,13 @@ public class StudentController
     public ResponseEntity<?> addNewStudent(@ApiParam(value = "Student Info", required = true, example = "studname:Student Name")
                                            @Valid
                                            @RequestBody
-                                                   Student newStudent) throws URISyntaxException
+                                                       User newStudent) throws URISyntaxException
     {
         newStudent = studentService.save(newStudent);
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
-        URI newStudentURI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{Studentid}").buildAndExpand(newStudent.getStudid()).toUri();
+        URI newStudentURI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{Studentid}").buildAndExpand(newStudent.getUserid()).toUri();
         responseHeaders.setLocation(newStudentURI);
 
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
@@ -113,7 +114,7 @@ public class StudentController
     public ResponseEntity<?> updateStudent(
             @ApiParam(value = "Student Info", required = true, example = "studname:Student Name")
             @RequestBody
-                    Student updateStudent,
+                    User updateStudent,
             @ApiParam(value = "Student ID", required = true, example = "1")
             @PathVariable
                     long Studentid)

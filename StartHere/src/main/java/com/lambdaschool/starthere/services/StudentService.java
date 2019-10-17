@@ -1,23 +1,24 @@
 package com.lambdaschool.starthere.services;
 
 import com.lambdaschool.starthere.models.Student;
+import com.lambdaschool.starthere.models.User;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface StudentService
 {
-    List<Student> findAll();
+    List<User> findAll();
 
-    Student findStudentById(long id);
+    User findStudentById(long id);
 
-    List<Student> findStudentByNameLike(String name);
+    List<User> findStudentByNameLike(String name);
 
     void delete(long id);
 
-    Student save(Student student);
+    User save(User student);
 
-    Student update(Student student, long id);
+    User update(User student, long id);
 
-    List<Student> findAllPageable(Pageable pageable);
+    List<User> findAllPageable(Pageable pageable);
 }
