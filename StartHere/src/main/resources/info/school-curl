@@ -1,0 +1,49 @@
+// get admins access code
+
+curl -X POST --user "lambda-client:lambda-secret" -d "grant_type=password&username=admin&password=password"  https://harliquinn-schooldeploy.herokuapp.com/login
+// admins access token = 4d6d0ddf-5811-41e2-b6df-d54395050b52
+
+// get users access code
+
+curl -X POST --user "lambda-client:lambda-secret" -d 'grant_type=password&username=barnbarn&password=ILuvM4th!' https://harliquinn-schooldeploy.herokuapp.com/login
+// barnbarns access token = aef25636-c33b-48ab-9e12-e906e9c5daa9
+
+***COURSES***
+
+GET /courses/courses/paging
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/courses/courses/paging
+
+GET /courses/courses
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/courses/courses
+
+GET /courses/studcount
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 716fd6d3-4c03-42d4-bcae-e49375700949" https://harliquinn-schooldeploy.herokuapp.com/courses/studcount
+
+DELETE /courses/courses/{courseid}
+curl -X DELETE -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/courses/courses/6
+
+***STUDENTS***
+
+GET /students/students/paging
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/students/students/paging
+
+GET /students/students
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 4d6d0ddf-5811-41e2-b6df-d54395050b52" https://harliquinn-schooldeploy.herokuapp.com/students/students
+
+GET /students/Student/{StudentId}
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/students/Student/45
+
+GET /students/student/namelike/{name}
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/students/student/namelike/cinnamon
+
+POST /students/Student
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer 4d6d0ddf-5811-41e2-b6df-d54395050b52" -d "{\"username\":\"New User\",\"password\":\"newpass\",\"primaryemail\":\"new@lambdaschool.local\",\"userroles\":[{\"role\":{\"roleid\":41,\"name\":\"STUD\"}}],\"studname\":\"New User\",\"courses\":[]}" https://harliquinn-schooldeploy.herokuapp.com/students/Student
+
+
+PUT /students/Student/47
+//Update New User
+curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer 4d6d0ddf-5811-41e2-b6df-d54395050b52" -d  "{\"username\":\"New User\",\"password\":\"newpass\",\"primaryemail\":\"new22@lambdaschool.local\",\"userroles\":[{\"role\":{\"roleid\":41,\"name\":\"STUD\"}}],\"studname\":\"New User2\",\"courses\":[]}" https://harliquinn-schooldeploy.herokuapp.com/students/Student/47
+
+DELETE /students/Student/47
+// Delete New User
+curl -X DELETE -H "Authorization: Bearer 4d6d0ddf-5811-41e2-b6df-d54395050b52" https://harliquinn-schooldeploy.herokuapp.com/students/Student/47
