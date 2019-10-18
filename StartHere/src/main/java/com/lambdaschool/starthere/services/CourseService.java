@@ -1,6 +1,7 @@
 package com.lambdaschool.starthere.services;
 
 import com.lambdaschool.starthere.models.Course;
+import com.lambdaschool.starthere.models.Role;
 import com.lambdaschool.starthere.view.CountStudentsInCourses;
 import org.springframework.data.domain.Pageable;
 
@@ -16,4 +17,6 @@ public interface CourseService
     void delete(long id);
 
     List<Course> listPageableCourses(Pageable pageable);
+
+    Course save(Course course);
 }

@@ -27,6 +27,12 @@ public class CourseServiceImpl implements CourseService
     }
 
     @Override
+    public Course save(Course course)
+    {
+        return courserepos.save(course);
+    }
+
+    @Override
     public List<Course> listPageableCourses(Pageable pageable)
     {
         List<Course> list = new ArrayList<>();

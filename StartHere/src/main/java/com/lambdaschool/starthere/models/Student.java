@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApiModel(value="Student",description="Lambda Students are best!")
-@Entity
-@Table(name = "student")
+//@Entity
+////@Table(name = "student")
 public class Student
 {
     @ApiModelProperty(name="studid",value="PK for Student", required=true, example="1")
@@ -23,11 +23,11 @@ public class Student
     private String studname;
 
     @ApiModelProperty(name="courses",value="List of Courses for Student", example="Java, Python, React")
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name = "studcourses",
-               joinColumns = {@JoinColumn(name = "studid")},
+               joinColumns = {@JoinColumn(name = "userid")},
                inverseJoinColumns = {@JoinColumn(name = "courseid")})
-    @JsonIgnoreProperties("students")
+    @JsonIgnoreProperties("courses")
     private List<Course> courses = new ArrayList<>();
 
     public Student()

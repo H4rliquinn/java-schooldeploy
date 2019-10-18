@@ -28,10 +28,10 @@ public class Course
     @JsonIgnoreProperties("courses")
     private Instructor instructor;
 
-    @ApiModelProperty(name="students",value="List of Students", example="Jason Sonnichsen")
+    @ApiModelProperty(name="users",value="List of Students", example="Jason Sonnichsen")
     @ManyToMany(mappedBy = "courses")
-    @JsonIgnoreProperties("courses")
-    private List<Student> students = new ArrayList<>();
+    @JsonIgnoreProperties("students")
+    private List<User> students = new ArrayList<>();
 
     public Course()
     {
@@ -78,12 +78,12 @@ public class Course
         this.instructor = instructor;
     }
 
-    public List<Student> getStudents()
+    public List<User> getStudents()
     {
         return students;
     }
 
-    public void setStudents(List<Student> students)
+    public void setStudents(List<User> students)
     {
         this.students = students;
     }

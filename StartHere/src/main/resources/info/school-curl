@@ -17,7 +17,7 @@ GET /courses/courses
 curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/courses/courses
 
 GET /courses/studcount
-curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/courses/studcount
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 716fd6d3-4c03-42d4-bcae-e49375700949" https://harliquinn-schooldeploy.herokuapp.com/courses/studcount
 
 DELETE /courses/courses/{courseid}
 curl -X DELETE -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/courses/courses/6

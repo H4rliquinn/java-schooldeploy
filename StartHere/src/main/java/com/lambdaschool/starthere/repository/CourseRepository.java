@@ -16,7 +16,7 @@ public interface CourseRepository extends PagingAndSortingRepository<Course, Lon
     @Query(value = "DELETE FROM studcourses WHERE courseid = :courseid", nativeQuery = true)
     void deleteCourseFromStudcourses(long courseid);
 
-    @Query(value = "SELECT s.courseid, coursename, count(studid) as countstudents FROM studcourses s INNER JOIN course c on s.courseid=c.courseid GROUP BY s.courseid, coursename", nativeQuery = true)
+    @Query(value = "SELECT s.courseid, coursename, count(userid) as countstudents FROM studcourses s INNER JOIN course c on s.courseid=c.courseid GROUP BY s.courseid, coursename", nativeQuery = true)
     ArrayList<CountStudentsInCourses> getCountStudentsInCourse();
 }
 
