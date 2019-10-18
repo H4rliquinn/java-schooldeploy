@@ -42,7 +42,7 @@ public class StudentController
     @ApiResponses(value = {@ApiResponse(code = 200, message = "List Of All Students", response = Student.class)})
     @GetMapping(value = "/students/paging", produces = {"application/json"})
     public ResponseEntity<?> listAllStudentsByPage(
-            @PageableDefault(page = 1,
+            @PageableDefault(page = 0,
                     size = 3)
                     Pageable pageable)
     {

@@ -1,0 +1,102 @@
+// get admins access code
+
+curl -X POST --user "lambda-client:lambda-secret" -d "grant_type=password&username=admin&password=password"  https://harliquinn-schooldeploy.herokuapp.com/login
+// admins access token = d62431aa-f429-40a0-ad99-712603c94cda
+
+// get users access code
+
+curl -X POST --user "lambda-client:lambda-secret" -d 'grant_type=password&username=barnbarn&password=ILuvM4th!' https://harliquinn-schooldeploy.herokuapp.com/login
+// barnbarns access token = aef25636-c33b-48ab-9e12-e906e9c5daa9
+
+***COURSES***
+
+GET /courses/courses/paging
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/courses/courses/paging
+
+GET /courses/courses
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/courses/courses
+
+GET /courses/studcount
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/courses/studcount
+
+DELETE /courses/courses/{courseid}
+curl -X DELETE -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/courses/courses/6
+
+***STUDENTS***
+
+GET /students/students/paging
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/students/students/paging
+
+GET /students/students
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/students/students
+
+GET /students/Student/{StudentId}
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/students/Student/45
+
+GET /students/student/namelike/{name}
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" https://harliquinn-schooldeploy.herokuapp.com/students/student/namelike/cinnamon
+
+POST /students/Student
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer d62431aa-f429-40a0-ad99-712603c94cda" -d "{\"username\":\"New User\",\"password\":\"newpass\",\"primaryemail\":\"new@lambdaschool.local\",\"userroles\":[{\"role\":{\"roleid\":41,\"name\":\"STUD\"}}],\"studname\":\"New User\",\"courses\":[]}" https://harliquinn-schooldeploy.herokuapp.com/students/Student
+
+
+
+
+
+
+PUT /students/Student/{Studentid}
+
+
+DELETE /students/Student/{Studentid}
+
+
+
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer 56ab5075-de2e-43ba-a407-e52b8f267ac7" -d "{ \"username\":\"snoopy\", \"password\":\"password\", \"roleid\":"1" }" https://harliquinn-schooldeploy.herokuapp.com/users/user
+
+// look up users and find snoopy's id
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 56ab5075-de2e-43ba-a407-e52b8f267ac7" https://harliquinn-schooldeploy.herokuapp.com/users/users
+
+
+
+// verify that snoopy is deleted
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 56ab5075-de2e-43ba-a407-e52b8f267ac7" https://harliquinn-schooldeploy.herokuapp.com/users/user/15
+
+// add ginger a new user
+curl -X POST -H "Content-Type: application/json" -d "{\"username\": \"Ginger\", \"password\": \"EATEATEAT\"}" https://harliquinn-schooldeploy.herokuapp.com/createnewuser
+
+// add snoopy again with full information
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer 56ab5075-de2e-43ba-a407-e52b8f267ac7" -d "{ \"username\": \"Snoopy\", \"password\": \"password\", \"userRoles\": [ { \"role\": { \"roleid\": 1 } } ], \"userphones\": [ { \"userphone\": \"myemail@local.home\" } ]}" https://harliquinn-schooldeploy.herokuapp.com/users/user
+
+// look at all users and verify that snoopy and ginger are available
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 56ab5075-de2e-43ba-a407-e52b8f267ac7" https://harliquinn-schooldeploy.herokuapp.com/users/users
+
+// revokes token for admin
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 56ab5075-de2e-43ba-a407-e52b8f267ac7" https://harliquinn-schooldeploy.herokuapp.com/oauth/revoke-token
+
+// this should fail with invalid token
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 56ab5075-de2e-43ba-a407-e52b8f267ac7" https://harliquinn-schooldeploy.herokuapp.com/users/users
+
+// get admins access code
+curl -X POST --user "lambda-client:lambda-secret" -d "grant_type=password&username=admin&password=password" https://harliquinn-schooldeploy.herokuapp.com/login
+
+// look at all users and ginger's id
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 3d28337c-b699-4ae6-86fe-4961f42b1142" https://harliquinn-schooldeploy.herokuapp.com/users/users
+
+// add email to ginger
+curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer 3d28337c-b699-4ae6-86fe-4961f42b1142" -d  "{ \"userid\": 16, \"userphones\": [ { \"userphone\": \"whisker@home.local\" } ] }" https://harliquinn-schooldeploy.herokuapp.com/users/user/16
+
+// look at all users and ginger's emails
+curl -X GET -H "Accept: application/json" -H "Authorization: Bearer 3d28337c-b699-4ae6-86fe-4961f42b1142" https://harliquinn-schooldeploy.herokuapp.com/users/users
+
+*** using a different host
+
+// sign on admin when on heroku
+curl -X POST --user "lambda-client:lambda-secret" -d "grant_type=password&username=admin&password=password" http://jrmmba-starthere.herokuapp.com/oauth/token
+
+
+{
+    "userid": 7,
+    "userphones": [
+        { "userphone": "whisker@home.local"}
+    ]
+}

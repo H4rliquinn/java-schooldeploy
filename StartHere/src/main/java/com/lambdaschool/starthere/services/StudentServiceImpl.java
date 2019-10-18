@@ -1,7 +1,9 @@
 package com.lambdaschool.starthere.services;
 
-import com.lambdaschool.starthere.models.Student;
-import com.lambdaschool.starthere.models.User;
+import com.lambdaschool.starthere.exceptions.ResourceFoundException;
+import com.lambdaschool.starthere.exceptions.ResourceNotFoundException;
+import com.lambdaschool.starthere.models.*;
+import com.lambdaschool.starthere.repository.RoleRepository;
 import com.lambdaschool.starthere.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,9 @@ public class StudentServiceImpl implements StudentService
 {
     @Autowired
     private StudentRepository studrepos;
+
+    @Autowired
+    private RoleRepository rolerepos;
 
     @Override
     public List<User> findAllPageable(Pageable pageable)
@@ -61,16 +66,48 @@ public class StudentServiceImpl implements StudentService
         }
     }
 
-    @Transactional
-    @Override
-    public User save(User student)
+//    @Transactional
+//    @Override
+//    public User save(User student)
+//    {
+//        User newStudent = new User();
+//        newStudent.setStudname(student.getStudname());
+//        return studrepos.save(newStudent);
+//    }
+@Transactional
+@Override
+public User save(User user)
+{
+    if (studrepos.findByUsername(user.getUsername().toLowerCase()) != null)
     {
-        User newStudent = new User();
-
-        newStudent.setStudname(student.getStudname());
-
-        return studrepos.save(newStudent);
+        throw new ResourceFoundException(user.getUsername() + " is already taken!");
     }
+
+    User newUser = new User();
+    newUser.setUsername(user.getUsername().toLowerCase());
+    newUser.setPasswordNoEncrypt(user.getPassword());
+    newUser.setPrimaryemail(user.getPrimaryemail().toLowerCase());
+    newUser.setStudname(user.getStudname());
+    ArrayList<UserRoles> newRoles = new ArrayList<>();
+    for (UserRoles ur : user.getUserroles())
+    {
+        long id = ur.getRole()
+                .getRoleid();
+        Role role = rolerepos.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Role id " + id + " not found!"));
+        newRoles.add(new UserRoles(newUser,
+                ur.getRole()));
+    }
+    newUser.setUserroles(newRoles);
+
+    for (Course uc : user.getCourses())
+    {
+        newUser.getCourses()
+                .add(new Course(uc.getCoursename(),uc.getInstructor()));
+    }
+
+    return studrepos.save(newUser);
+}
 
     @Override
     public User update(User student, long id)
